@@ -3,7 +3,10 @@ export const state = {
   currentView: 'menu',
   activeGame: null,
   lastResults: null,
-  highScores: JSON.parse(localStorage.getItem('tedsMathsHighScores') || '{}')
+  highScores: JSON.parse(localStorage.getItem('tedsMathsHighScores') || '{}'),
+  // Auth state
+  user: null,
+  isAuthLoading: true
 };
 
 // Save high scores to localStorage
