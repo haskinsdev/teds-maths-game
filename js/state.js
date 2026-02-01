@@ -3,7 +3,7 @@ export const state = {
   currentView: 'menu',
   activeGame: null,
   lastResults: null,
-  highScores: JSON.parse(localStorage.getItem('tedsMathsHighScores') || '{}'),
+  highScores: JSON.parse(localStorage.getItem('mathBrainHighScores') || '{}'),
   // Auth state
   user: null,
   isAuthLoading: true
@@ -11,7 +11,7 @@ export const state = {
 
 // Save high scores to localStorage
 export function saveHighScores() {
-  localStorage.setItem('tedsMathsHighScores', JSON.stringify(state.highScores));
+  localStorage.setItem('mathBrainHighScores', JSON.stringify(state.highScores));
 }
 
 // Check and update high score for a game

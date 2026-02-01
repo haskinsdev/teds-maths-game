@@ -1,4 +1,4 @@
-// Ted's Maths Game - Main Application
+// Math Brain - Main Application
 import { state, updateHighScore } from './state.js';
 import { gameRegistry } from './games/game-registry.js';
 import { Menu } from './components/menu.js';
@@ -47,7 +47,7 @@ function showMenu() {
       await signOut();
       state.user = null;
       // Reload high scores from localStorage
-      state.highScores = JSON.parse(localStorage.getItem('tedsMathsHighScores') || '{}');
+      state.highScores = JSON.parse(localStorage.getItem('mathBrainHighScores') || '{}');
       showMenu();
     }
   });

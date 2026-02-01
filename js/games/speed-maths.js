@@ -123,7 +123,7 @@ export class SpeedMathsGame {
 
     this.settings = {
       totalQuestions: 20,
-      timePerQuestion: 5,
+      timePerQuestion: 10,
       numberRange: { min: 1, max: 12 },
       operations: ['+', '-', '×', '÷']
     };
@@ -160,16 +160,7 @@ export class SpeedMathsGame {
 
         <div class="question-display" id="question"></div>
 
-        <div class="answer-input">
-          <input
-            type="number"
-            id="answer-input"
-            inputmode="numeric"
-            pattern="[0-9]*"
-            autocomplete="off"
-            placeholder="?"
-          >
-        </div>
+        <div class="answer-display" id="answer-display">?</div>
 
         <div class="number-pad" id="number-pad"></div>
       </div>
@@ -180,14 +171,24 @@ export class SpeedMathsGame {
   }
 
   bindEvents() {
-    const input = this.container.querySelector('#answer-input');
+    // Store current answer as string
+    this.currentAnswer = '';
 
-    // Keyboard input
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && input.value !== '') {
-        this.submitAnswer(parseInt(input.value, 10));
+    // Keyboard input for desktop users
+    this.keyHandler = (e) => {
+      if (!this.isRunning) return;
+
+      if (e.key >= '0' && e.key <= '9') {
+        this.currentAnswer += e.key;
+        this.updateAnswerDisplay();
+      } else if (e.key === 'Backspace') {
+        this.currentAnswer = this.currentAnswer.slice(0, -1);
+        this.updateAnswerDisplay();
+      } else if (e.key === 'Enter' && this.currentAnswer !== '') {
+        this.submitAnswer(parseInt(this.currentAnswer, 10));
       }
-    });
+    };
+    document.addEventListener('keydown', this.keyHandler);
 
     // Timer events
     this.timer.onTimeout(() => {
@@ -197,6 +198,11 @@ export class SpeedMathsGame {
     this.timer.onTick((remaining) => {
       this.updateTimerDisplay(remaining);
     });
+  }
+
+  updateAnswerDisplay() {
+    const display = this.container.querySelector('#answer-display');
+    display.textContent = this.currentAnswer || '?';
   }
 
   renderNumberPad() {
@@ -215,16 +221,17 @@ export class SpeedMathsGame {
       if (!btn || !this.isRunning) return;
 
       const value = btn.dataset.value;
-      const input = this.container.querySelector('#answer-input');
 
       if (value === 'C') {
-        input.value = '';
+        this.currentAnswer = '';
+        this.updateAnswerDisplay();
       } else if (value === 'OK') {
-        if (input.value !== '') {
-          this.submitAnswer(parseInt(input.value, 10));
+        if (this.currentAnswer !== '') {
+          this.submitAnswer(parseInt(this.currentAnswer, 10));
         }
       } else {
-        input.value += value;
+        this.currentAnswer += value;
+        this.updateAnswerDisplay();
       }
     });
   }
@@ -237,7 +244,6 @@ export class SpeedMathsGame {
   showQuestion() {
     const question = this.questions[this.currentIndex];
     const questionEl = this.container.querySelector('#question');
-    const input = this.container.querySelector('#answer-input');
     const counterEl = this.container.querySelector('#current-q');
     const progressEl = this.container.querySelector('#progress-fill');
 
@@ -252,9 +258,9 @@ export class SpeedMathsGame {
     counterEl.textContent = this.currentIndex + 1;
     progressEl.style.width = `${(this.currentIndex / this.settings.totalQuestions) * 100}%`;
 
-    // Reset input
-    input.value = '';
-    input.focus();
+    // Reset answer
+    this.currentAnswer = '';
+    this.updateAnswerDisplay();
 
     // Start timer
     this.timer.start(this.settings.timePerQuestion);
@@ -279,13 +285,37 @@ export class SpeedMathsGame {
       this.score++;
     }
 
-    // Next question or end
-    this.currentIndex++;
+    // Show feedback
+    this.showFeedback(isCorrect, question.correctAnswer, () => {
+      // Next question or end
+      this.currentIndex++;
 
-    if (this.currentIndex >= this.settings.totalQuestions) {
-      this.end();
+      if (this.currentIndex >= this.settings.totalQuestions) {
+        this.end();
+      } else {
+        this.showQuestion();
+      }
+    });
+  }
+
+  showFeedback(isCorrect, correctAnswer, onComplete) {
+    const questionEl = this.container.querySelector('#question');
+
+    // Temporarily stop accepting input
+    this.isRunning = false;
+
+    if (isCorrect) {
+      questionEl.innerHTML += `<span class="feedback feedback-correct">Correct!</span>`;
+      setTimeout(() => {
+        this.isRunning = true;
+        onComplete();
+      }, 500);
     } else {
-      this.showQuestion();
+      questionEl.innerHTML += `<span class="feedback feedback-incorrect">The answer was ${correctAnswer}</span>`;
+      setTimeout(() => {
+        this.isRunning = true;
+        onComplete();
+      }, 1500);
     }
   }
 
@@ -316,6 +346,9 @@ export class SpeedMathsGame {
   destroy() {
     this.timer.stop();
     this.isRunning = false;
+    if (this.keyHandler) {
+      document.removeEventListener('keydown', this.keyHandler);
+    }
   }
 }
 
@@ -323,7 +356,7 @@ export class SpeedMathsGame {
 export default {
   name: 'speed-maths',
   displayName: 'Speed Maths',
-  description: '20 questions, 5 seconds each. How fast is your maths?',
+  description: '20 questions, 10 seconds each. How fast is your maths?',
   icon: '⚡',
   GameClass: SpeedMathsGame
 };
