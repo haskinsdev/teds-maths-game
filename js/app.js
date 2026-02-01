@@ -16,7 +16,9 @@ import {
 
 // Import and register games
 import speedMathsModule from './games/speed-maths.js';
+import practiceMathsModule from './games/practice-maths.js';
 gameRegistry.register(speedMathsModule);
+gameRegistry.register(practiceMathsModule);
 
 // Get view container
 const viewContainer = document.getElementById('view-container');
