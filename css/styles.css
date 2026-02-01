@@ -549,25 +549,57 @@ body {
   }
 
   #app {
-    padding: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .app-header {
+    padding: 0.75rem 0;
+  }
+
+  .app-logo {
+    max-width: 180px;
+  }
+
+  .speed-maths,
+  .practice-maths {
+    gap: 1rem;
+    padding: 0.5rem 0;
   }
 
   .question-display {
     font-size: 2rem;
-    padding: 1.5rem 2rem;
+    padding: 1rem 1.5rem;
+    gap: 0.5rem;
   }
 
   .timer-display {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
   }
 
   .timer-value {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
 
-  .app-logo {
-    max-width: 200px;
+  .practice-hint {
+    font-size: 1rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .answer-display {
+    padding: 0.75rem;
+    min-height: 3.5rem;
+    max-width: 180px;
+  }
+
+  .number-pad {
+    gap: 0.5rem;
+    max-width: 260px;
+  }
+
+  .num-btn {
+    padding: 1rem;
+    font-size: 1.35rem;
   }
 }
 
