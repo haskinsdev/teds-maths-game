@@ -1,18 +1,19 @@
 /* CSS Variables */
 :root {
-  --color-primary: #4CAF50;
-  --color-primary-dark: #388E3C;
-  --color-secondary: #2196F3;
-  --color-accent: #FF9800;
+  --color-primary: #2196F3;
+  --color-primary-dark: #1976D2;
+  --color-secondary: #FF9800;
+  --color-accent: #FFC107;
   --color-danger: #f44336;
-  --color-success: #8BC34A;
-  --color-background: #f0f4f8;
-  --color-surface: #ffffff;
+  --color-success: #4CAF50;
+  --color-background: #ffffff;
+  --color-surface: #f8f9fa;
   --color-text: #333333;
   --color-text-light: #666666;
   --color-text-muted: #999999;
 
-  --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-family: 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fredoka One', cursive;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -63,6 +64,13 @@ body {
   text-shadow: 2px 2px 0 var(--color-secondary);
 }
 
+.app-logo {
+  max-width: 280px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
 /* View Container */
 #view-container {
   flex: 1;
@@ -77,8 +85,8 @@ body {
   justify-content: center;
   padding: 1rem 2rem;
   font-size: 1.1rem;
-  font-weight: 600;
-  font-family: inherit;
+  font-weight: 400;
+  font-family: var(--font-display);
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -170,7 +178,8 @@ body {
 
 .game-name {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 400;
+  font-family: var(--font-display);
   color: var(--color-text);
   margin-bottom: 0.25rem;
 }
@@ -197,8 +206,9 @@ body {
 
 .high-score-value {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-accent);
+  font-weight: 400;
+  font-family: var(--font-display);
+  color: var(--color-secondary);
 }
 
 /* Speed Maths Game Styles */
@@ -261,7 +271,8 @@ body {
 
 .timer-value {
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 400;
+  font-family: var(--font-display);
   color: white;
 }
 
@@ -276,7 +287,8 @@ body {
   flex-wrap: wrap;
   gap: 0.75rem;
   font-size: 2.5rem;
-  font-weight: 600;
+  font-weight: 400;
+  font-family: var(--font-display);
 }
 
 .operand {
@@ -322,7 +334,8 @@ body {
   max-width: 200px;
   padding: 1rem;
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 400;
+  font-family: var(--font-display);
   text-align: center;
   border: 3px solid var(--color-primary);
   border-radius: var(--radius-md);
@@ -346,8 +359,8 @@ body {
 .num-btn {
   padding: 1.25rem;
   font-size: 1.5rem;
-  font-weight: 600;
-  font-family: inherit;
+  font-weight: 400;
+  font-family: var(--font-display);
   border: none;
   border-radius: var(--radius-md);
   background: var(--color-surface);
@@ -412,7 +425,8 @@ body {
 
 .score-value {
   font-size: 4rem;
-  font-weight: 700;
+  font-weight: 400;
+  font-family: var(--font-display);
   color: var(--color-primary);
   line-height: 1;
 }
@@ -532,6 +546,10 @@ body {
 
   .timer-value {
     font-size: 2.5rem;
+  }
+
+  .app-logo {
+    max-width: 200px;
   }
 }
 
